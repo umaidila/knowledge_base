@@ -123,7 +123,7 @@ namespace knowledge_base
             public override bool isCorrectSet(string s)
             {
                 foreach (string p in s.Split(','))
-                    if (p != "да" || p != "нет")
+                    if (p != "да" && p != "нет")
                         return false;
 
                 return true;
@@ -539,6 +539,8 @@ namespace knowledge_base
                 }
                 tempClass.name = nameClassText.Text;
             }
+            foreach (var elem in refactorClassElem)
+                elem.Enabled = false;
             setClassView();
         }
 

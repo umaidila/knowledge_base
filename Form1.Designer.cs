@@ -449,7 +449,7 @@ namespace knowledge_base
             // 
             // addSignsButton
             // 
-            this.addSignsButton.Location = new System.Drawing.Point(117, 13);
+            this.addSignsButton.Location = new System.Drawing.Point(270, 13);
             this.addSignsButton.Name = "addSignsButton";
             this.addSignsButton.Size = new System.Drawing.Size(134, 28);
             this.addSignsButton.TabIndex = 1;
@@ -459,7 +459,7 @@ namespace knowledge_base
             // 
             // loadClassesButton
             // 
-            this.loadClassesButton.Location = new System.Drawing.Point(298, 13);
+            this.loadClassesButton.Location = new System.Drawing.Point(437, 13);
             this.loadClassesButton.Name = "loadClassesButton";
             this.loadClassesButton.Size = new System.Drawing.Size(126, 28);
             this.loadClassesButton.TabIndex = 2;
@@ -476,7 +476,7 @@ namespace knowledge_base
             this.Controls.Add(this.addSignsButton);
             this.Controls.Add(this.maintabControl);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "База знаний";
             this.maintabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
