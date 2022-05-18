@@ -448,7 +448,8 @@ namespace knowledge_base
         }
 
         private void changeClassButton_Click(object sender, EventArgs e)
-        {           
+        {
+            signsForClassView.Rows.Clear();
             int rowInd = classGrid.CurrentCell.RowIndex;
             string nameClass = classGrid.Rows[rowInd].Cells[0].Value.ToString();
             if (nameClass == "")
@@ -608,6 +609,54 @@ namespace knowledge_base
             foreach (MetalClass m in results)
                 resultProbabilityText.Text += m.name + " : " + m.rating + newLine;
 
+        }
+
+        private void saveSignsButton_Click(object sender, EventArgs e)
+        {
+            if (signList.Count == 0)
+            {
+                MessageBox.Show("Список признаков пуст");
+                return;
+            }
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Текстовый файл|*.txt";
+            saveFileDialog.Title = "Выберите текстовый файл";
+
+            if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string newLine = Environment.NewLine;
+                string outputString = "";
+                foreach (Sign sign in signList)
+                {
+                    outputString += sign.name + ";" + sign.getType() + ";" + sign.getValue() + newLine;
+                }
+                System.IO.File.WriteAllText(saveFileDialog.FileName, outputString);
+            }
+        }
+
+        private void saveClassesButton_Click(object sender, EventArgs e)
+        {
+            if (classes.Count == 0)
+            {
+                MessageBox.Show("Список классов пуст");
+                return;
+            }
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Текстовый файл|*.txt";
+            saveFileDialog.Title = "Выберите текстовый файл";
+
+            if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string newLine = Environment.NewLine;
+                string outputString = "";
+                foreach (MetalClass metal in classes)
+                {
+                    outputString += "[" + metal.name + "]"+newLine;
+                    foreach (Sign sign in metal.valuesForSigns)
+                        outputString += sign.name + ";" + sign.getValue() + newLine;
+                }
+                System.IO.File.WriteAllText(saveFileDialog.FileName, outputString);
+            }
         }
     }
 }

@@ -69,6 +69,8 @@ namespace knowledge_base
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.addSignsButton = new System.Windows.Forms.Button();
             this.loadClassesButton = new System.Windows.Forms.Button();
+            this.saveSignsButton = new System.Windows.Forms.Button();
+            this.saveClassesButton = new System.Windows.Forms.Button();
             this.maintabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.signsGrid)).BeginInit();
@@ -449,7 +451,7 @@ namespace knowledge_base
             // 
             // addSignsButton
             // 
-            this.addSignsButton.Location = new System.Drawing.Point(270, 13);
+            this.addSignsButton.Location = new System.Drawing.Point(82, 13);
             this.addSignsButton.Name = "addSignsButton";
             this.addSignsButton.Size = new System.Drawing.Size(134, 28);
             this.addSignsButton.TabIndex = 1;
@@ -459,7 +461,7 @@ namespace knowledge_base
             // 
             // loadClassesButton
             // 
-            this.loadClassesButton.Location = new System.Drawing.Point(437, 13);
+            this.loadClassesButton.Location = new System.Drawing.Point(222, 13);
             this.loadClassesButton.Name = "loadClassesButton";
             this.loadClassesButton.Size = new System.Drawing.Size(126, 28);
             this.loadClassesButton.TabIndex = 2;
@@ -467,11 +469,33 @@ namespace knowledge_base
             this.loadClassesButton.UseVisualStyleBackColor = true;
             this.loadClassesButton.Click += new System.EventHandler(this.loadClassesButton_Click);
             // 
+            // saveSignsButton
+            // 
+            this.saveSignsButton.Location = new System.Drawing.Point(443, 13);
+            this.saveSignsButton.Name = "saveSignsButton";
+            this.saveSignsButton.Size = new System.Drawing.Size(139, 28);
+            this.saveSignsButton.TabIndex = 3;
+            this.saveSignsButton.Text = "Сохранить признаки";
+            this.saveSignsButton.UseVisualStyleBackColor = true;
+            this.saveSignsButton.Click += new System.EventHandler(this.saveSignsButton_Click);
+            // 
+            // saveClassesButton
+            // 
+            this.saveClassesButton.Location = new System.Drawing.Point(588, 13);
+            this.saveClassesButton.Name = "saveClassesButton";
+            this.saveClassesButton.Size = new System.Drawing.Size(145, 28);
+            this.saveClassesButton.TabIndex = 4;
+            this.saveClassesButton.Text = "Сохранить классы";
+            this.saveClassesButton.UseVisualStyleBackColor = true;
+            this.saveClassesButton.Click += new System.EventHandler(this.saveClassesButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.saveClassesButton);
+            this.Controls.Add(this.saveSignsButton);
             this.Controls.Add(this.loadClassesButton);
             this.Controls.Add(this.addSignsButton);
             this.Controls.Add(this.maintabControl);
@@ -534,6 +558,8 @@ namespace knowledge_base
         private System.Windows.Forms.DataGridView resultSignsView;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.Button saveSignsButton;
+        private System.Windows.Forms.Button saveClassesButton;
     }
 }
 
