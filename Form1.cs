@@ -122,10 +122,31 @@ namespace knowledge_base
 
             public override bool isCorrectSet(string s)
             {
+                if (s == "") return false;
+                if (s.IndexOf(',') == -1) return false;
                 foreach (string p in s.Split(','))
                     if (p != "да" && p != "нет")
                         return false;
 
+                return true;
+            }
+
+            public static bool checkIntegrity(ValueBinary signValue,ValueBinary classValue)
+            {
+                bool flag;
+                foreach (string cv in classValue.values)
+                {
+                    flag = false;
+                    foreach(string sv in signValue.values)
+                    {
+                        if (sv == cv)
+                        {
+                            flag = true;
+                            break;
+                        }                        
+                    }
+                    if (!flag) return false;
+                }
                 return true;
             }
         }
@@ -162,6 +183,27 @@ namespace knowledge_base
 
             public override bool isCorrectSet(string s)
             {
+                if (s == "")
+                    return false;
+                return true;
+            }
+
+            public static bool checkIntegrity(ValueEnum signValue, ValueEnum classValue)
+            {
+                bool flag;
+                foreach (string cv in classValue.values)
+                {
+                    flag = false;
+                    foreach (string sv in signValue.values)
+                    {
+                        if (sv == cv)
+                        {
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if (!flag) return false;
+                }
                 return true;
             }
         }
@@ -183,7 +225,7 @@ namespace knowledge_base
 
             public override string getValue()
             {
-                return leftValue.ToString() + ":" + rightValue.ToString();
+                return leftValue.ToString(System.Globalization.CultureInfo.InvariantCulture) + ":" + rightValue.ToString(System.Globalization.CultureInfo.InvariantCulture);
             }
 
             public override bool isFit(string s)
@@ -198,10 +240,21 @@ namespace knowledge_base
 
             public override bool isCorrectSet(string s)
             {
-                if (s.Split(':').Length != 2)
+                if (s == "")
                     return false;
-                else
-                    return true;
+                string[] parts = s.Split(':');
+                if (parts.Length != 2)
+                    return false;
+                IFormatProvider formatter = new NumberFormatInfo { NumberDecimalSeparator = "." };
+                float tleft = float.Parse(parts[0], formatter);
+                float tright = float.Parse(parts[1], formatter);
+                if (tleft > tright)
+                    return false;
+                return true;
+            }
+            public static bool checkIntegrity(ValueInterval signValue, ValueInterval classValue)
+            {
+                return (classValue.leftValue >= signValue.leftValue && classValue.rightValue <= signValue.rightValue);
             }
         }
 
@@ -300,6 +353,11 @@ namespace knowledge_base
         }
         private void okSignButton_Click(object sender, EventArgs e)
         {
+            if (nameSignText.Text == "") 
+            {
+                MessageBox.Show("Введите название признака");
+                return;
+            }
             if (isAdding) // добавить новый признак
             {
                 Sign sign = new Sign(nameSignText.Text, chooseType.SelectedIndex);
@@ -441,6 +499,7 @@ namespace knowledge_base
         {
             isAddingClass = true;
             signsForClassView.Rows.Clear();
+            nameClassText.Text = "";
             foreach (var elem in refactorClassElem)
                 elem.Enabled = true;
             foreach (var elem in signList)
@@ -475,13 +534,31 @@ namespace knowledge_base
         }
 
         private void saveClassButton_Click(object sender, EventArgs e)
-        {
+        {   
+            if (nameClassText.Text == "")
+            {
+                MessageBox.Show("Введите имя признака");
+                return;
+            }
             string nameSign;
             Sign sign;
             int type = -1;
             if (isAddingClass)
             {               
-                MetalClass metal = new MetalClass(nameClassText.Text);                                
+                MetalClass metal = new MetalClass(nameClassText.Text);
+                bool checkFlag = false;
+                foreach (DataGridViewRow row in signsForClassView.Rows)
+                {
+                    if (row.Cells[1].Value == null)
+                        continue;
+                    if (row.Cells[1].Value.ToString() != "-")
+                        checkFlag = true;
+                }
+                if (!checkFlag)
+                {
+                    MessageBox.Show("Не заполнен ни один признак");
+                    return;
+                }
                 // доделать
                 foreach (DataGridViewRow row in signsForClassView.Rows) // добавляем к классу значения признаков
                 {
@@ -657,6 +734,82 @@ namespace knowledge_base
                 }
                 System.IO.File.WriteAllText(saveFileDialog.FileName, outputString);
             }
+        }
+
+        private void checkIntegrity_button_Click(object sender, EventArgs e)
+        {
+            Sign signInList = null;
+            string message = "";
+            string newLine = Environment.NewLine;
+
+            foreach (MetalClass metal in classes)
+            {
+                foreach (Sign sign in metal.valuesForSigns)
+                {
+                    foreach(Sign s in signList)
+                    {
+                        if (sign.name == s.name)
+                        {
+                            signInList = s;
+                            break;
+                        }
+                    }
+
+                    switch (sign.type)
+                    {
+                        case 0:
+                            if (!ValueBinary.checkIntegrity((ValueBinary)signInList.value, (ValueBinary)sign.value))
+                                message += metal.name + ", " + sign.name + newLine;
+                            break;
+                        case 1:
+                            if (!ValueEnum.checkIntegrity((ValueEnum)signInList.value, (ValueEnum)sign.value))
+                                message += metal.name + ", " + sign.name + newLine;
+                            break;
+                        case 2:
+                            if (!ValueInterval.checkIntegrity((ValueInterval)signInList.value,(ValueInterval)sign.value))
+                                message += metal.name + ", " + sign.name + newLine;
+                            break;
+                    }
+                }
+            }
+
+            if (message == "")
+                MessageBox.Show("Целостность не нарушена");
+            else
+                MessageBox.Show("Нарушена целостность в:" + newLine + message);
+        }
+
+        private void delete_sign_button_Click(object sender, EventArgs e)
+        {
+            tempSign = signList[signsGrid.CurrentCell.RowIndex];
+            if (tempSign == null)
+            {
+                MessageBox.Show("Признак не выбран");
+                return;
+            }
+            signList.Remove(tempSign);
+            updateSignView();
+        }
+
+        private void delete_class_button_Click(object sender, EventArgs e)
+        {
+            int rowInd = classGrid.CurrentCell.RowIndex;
+            string nameClass = classGrid.Rows[rowInd].Cells[0].Value.ToString();
+            if (nameClass == "")
+            {
+                MessageBox.Show("Выберите ячейку класса");
+                return;
+            }
+            foreach (var m in classes) // ищем класс для редактирования в списке
+            {
+                if (nameClass == m.name)
+                {
+                    tempClass = m;
+                    break;
+                }
+            }
+            classes.Remove(tempClass);
+            setClassView();
         }
     }
 }

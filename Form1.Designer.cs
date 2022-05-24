@@ -71,6 +71,9 @@ namespace knowledge_base
             this.loadClassesButton = new System.Windows.Forms.Button();
             this.saveSignsButton = new System.Windows.Forms.Button();
             this.saveClassesButton = new System.Windows.Forms.Button();
+            this.checkIntegrity_button = new System.Windows.Forms.Button();
+            this.delete_sign_button = new System.Windows.Forms.Button();
+            this.delete_class_button = new System.Windows.Forms.Button();
             this.maintabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.signsGrid)).BeginInit();
@@ -94,6 +97,7 @@ namespace knowledge_base
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.delete_sign_button);
             this.tabPage1.Controls.Add(this.okSignButton);
             this.tabPage1.Controls.Add(this.valuesTextBox);
             this.tabPage1.Controls.Add(this.valuesLabel);
@@ -181,7 +185,7 @@ namespace knowledge_base
             // 
             // changeSignButton
             // 
-            this.changeSignButton.Location = new System.Drawing.Point(672, 55);
+            this.changeSignButton.Location = new System.Drawing.Point(672, 70);
             this.changeSignButton.Name = "changeSignButton";
             this.changeSignButton.Size = new System.Drawing.Size(99, 26);
             this.changeSignButton.TabIndex = 2;
@@ -191,7 +195,7 @@ namespace knowledge_base
             // 
             // addSignButton
             // 
-            this.addSignButton.Location = new System.Drawing.Point(567, 55);
+            this.addSignButton.Location = new System.Drawing.Point(567, 70);
             this.addSignButton.Name = "addSignButton";
             this.addSignButton.Size = new System.Drawing.Size(99, 26);
             this.addSignButton.TabIndex = 1;
@@ -235,6 +239,7 @@ namespace knowledge_base
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.delete_class_button);
             this.tabPage2.Controls.Add(this.signsForClassView);
             this.tabPage2.Controls.Add(this.saveClassButton);
             this.tabPage2.Controls.Add(this.valuesForClassLabel);
@@ -314,7 +319,7 @@ namespace knowledge_base
             // 
             // changeClassButton
             // 
-            this.changeClassButton.Location = new System.Drawing.Point(637, 36);
+            this.changeClassButton.Location = new System.Drawing.Point(586, 36);
             this.changeClassButton.Name = "changeClassButton";
             this.changeClassButton.Size = new System.Drawing.Size(90, 27);
             this.changeClassButton.TabIndex = 2;
@@ -324,7 +329,7 @@ namespace knowledge_base
             // 
             // addClassButton
             // 
-            this.addClassButton.Location = new System.Drawing.Point(508, 36);
+            this.addClassButton.Location = new System.Drawing.Point(481, 36);
             this.addClassButton.Name = "addClassButton";
             this.addClassButton.Size = new System.Drawing.Size(97, 27);
             this.addClassButton.TabIndex = 1;
@@ -451,7 +456,7 @@ namespace knowledge_base
             // 
             // addSignsButton
             // 
-            this.addSignsButton.Location = new System.Drawing.Point(82, 13);
+            this.addSignsButton.Location = new System.Drawing.Point(26, 13);
             this.addSignsButton.Name = "addSignsButton";
             this.addSignsButton.Size = new System.Drawing.Size(134, 28);
             this.addSignsButton.TabIndex = 1;
@@ -461,7 +466,7 @@ namespace knowledge_base
             // 
             // loadClassesButton
             // 
-            this.loadClassesButton.Location = new System.Drawing.Point(222, 13);
+            this.loadClassesButton.Location = new System.Drawing.Point(166, 13);
             this.loadClassesButton.Name = "loadClassesButton";
             this.loadClassesButton.Size = new System.Drawing.Size(126, 28);
             this.loadClassesButton.TabIndex = 2;
@@ -471,7 +476,7 @@ namespace knowledge_base
             // 
             // saveSignsButton
             // 
-            this.saveSignsButton.Location = new System.Drawing.Point(443, 13);
+            this.saveSignsButton.Location = new System.Drawing.Point(496, 12);
             this.saveSignsButton.Name = "saveSignsButton";
             this.saveSignsButton.Size = new System.Drawing.Size(139, 28);
             this.saveSignsButton.TabIndex = 3;
@@ -481,7 +486,7 @@ namespace knowledge_base
             // 
             // saveClassesButton
             // 
-            this.saveClassesButton.Location = new System.Drawing.Point(588, 13);
+            this.saveClassesButton.Location = new System.Drawing.Point(641, 13);
             this.saveClassesButton.Name = "saveClassesButton";
             this.saveClassesButton.Size = new System.Drawing.Size(145, 28);
             this.saveClassesButton.TabIndex = 4;
@@ -489,11 +494,42 @@ namespace knowledge_base
             this.saveClassesButton.UseVisualStyleBackColor = true;
             this.saveClassesButton.Click += new System.EventHandler(this.saveClassesButton_Click);
             // 
+            // checkIntegrity_button
+            // 
+            this.checkIntegrity_button.Location = new System.Drawing.Point(323, 13);
+            this.checkIntegrity_button.Name = "checkIntegrity_button";
+            this.checkIntegrity_button.Size = new System.Drawing.Size(156, 28);
+            this.checkIntegrity_button.TabIndex = 5;
+            this.checkIntegrity_button.Text = "Проверка целостоности";
+            this.checkIntegrity_button.UseVisualStyleBackColor = true;
+            this.checkIntegrity_button.Click += new System.EventHandler(this.checkIntegrity_button_Click);
+            // 
+            // delete_sign_button
+            // 
+            this.delete_sign_button.Location = new System.Drawing.Point(567, 28);
+            this.delete_sign_button.Name = "delete_sign_button";
+            this.delete_sign_button.Size = new System.Drawing.Size(99, 23);
+            this.delete_sign_button.TabIndex = 9;
+            this.delete_sign_button.Text = "Удалить";
+            this.delete_sign_button.UseVisualStyleBackColor = true;
+            this.delete_sign_button.Click += new System.EventHandler(this.delete_sign_button_Click);
+            // 
+            // delete_class_button
+            // 
+            this.delete_class_button.Location = new System.Drawing.Point(691, 36);
+            this.delete_class_button.Name = "delete_class_button";
+            this.delete_class_button.Size = new System.Drawing.Size(91, 27);
+            this.delete_class_button.TabIndex = 11;
+            this.delete_class_button.Text = "Удалить ";
+            this.delete_class_button.UseVisualStyleBackColor = true;
+            this.delete_class_button.Click += new System.EventHandler(this.delete_class_button_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.checkIntegrity_button);
             this.Controls.Add(this.saveClassesButton);
             this.Controls.Add(this.saveSignsButton);
             this.Controls.Add(this.loadClassesButton);
@@ -560,6 +596,9 @@ namespace knowledge_base
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.Button saveSignsButton;
         private System.Windows.Forms.Button saveClassesButton;
+        private System.Windows.Forms.Button checkIntegrity_button;
+        private System.Windows.Forms.Button delete_sign_button;
+        private System.Windows.Forms.Button delete_class_button;
     }
 }
 
